@@ -105,14 +105,14 @@ label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margi
 
 /* ===================== LANDING ===================== */
 #view-landing{background:var(--paper)}
-.landing-nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0;border-bottom:1px solid var(--line-soft)}
+.landing-nav{display:flex;align-items:center;justify-content:space-between;padding-top:22px;padding-bottom:22px;border-bottom:1px solid var(--line-soft)}
 .brand{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:600;font-size:20px;color:var(--ink)}
 .brand .seal{width:32px;height:32px}
 .landing-links{display:flex;gap:28px;align-items:center}
 .landing-links a{color:var(--ink-soft);text-decoration:none;font-size:14px;font-weight:500}
 .landing-links a:hover{color:var(--ink)}
 .landing-actions{display:flex;gap:10px}
-.hero{position:relative;padding:78px 0 60px;display:grid;grid-template-columns:1.05fr .95fr;gap:50px;align-items:center}
+.hero{position:relative;padding-top:78px;padding-bottom:60px;display:grid;grid-template-columns:1.05fr .95fr;gap:50px;align-items:center}
 .hero h1{font-size:46px;line-height:1.08;max-width:620px}
 .hero .lede{font-size:17px;max-width:480px;color:var(--ink-soft)}
 .hero-actions{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
@@ -153,7 +153,7 @@ section.band{padding:64px 0}
 .cta-roles{display:flex;justify-content:center;gap:14px;margin-top:22px;flex-wrap:wrap}
 .cta-roles button{background:transparent;border:1px solid #454b5c;color:#fff;padding:10px 16px;border-radius:var(--radius-s);font-size:13.5px}
 .cta-roles button:hover{border-color:#fff}
-footer.site{padding:36px 0;font-size:12.5px;color:var(--slate-quiet);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+footer.site{padding-top:36px;padding-bottom:36px;font-size:12.5px;color:var(--slate-quiet);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 @media(max-width:860px){.hero{grid-template-columns:1fr;padding-top:50px}.problem-grid,.roles-grid,.trust-grid{grid-template-columns:1fr}.landing-links{display:none}}
 
 /* ===================== AUTH ===================== */
@@ -377,3 +377,19 @@ body.low-bandwidth .reveal,body.low-bandwidth .reveal-stagger > *{opacity:1!impo
 .flow-strip{position:relative}
 .flow-step{transition:transform .2s ease}
 .flow-step:hover{transform:translateY(-2px)}
+
+/* ---- narrow-phone safety net ----
+   .container's horizontal padding was previously being wiped out on
+   .landing-nav / .hero / footer.site because each of those also set
+   its own shorthand `padding` on the SAME element (equal specificity,
+   declared later in the file => it won and zeroed left/right padding).
+   Fixed above by switching those three to padding-top/padding-bottom.
+   This block just keeps things comfortable on very small phones now
+   that the real 32px side padding is back. */
+@media(max-width:480px){
+  .container{padding:0 18px}
+  .brand{font-size:17px;gap:7px}
+  .landing-actions{gap:6px}
+  .btn-sm{padding:7px 10px;font-size:12px}
+  .hero h1{font-size:34px}
+}
