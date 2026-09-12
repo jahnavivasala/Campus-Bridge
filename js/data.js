@@ -115,5 +115,5 @@ const NAV = {
 };
 const ROLE_LABEL = { student: 'STUDENT WORKSPACE', college: 'COLLEGE / TPO WORKSPACE', company: 'COMPANY WORKSPACE', admin: 'ADMINISTRATOR WORKSPACE' };
 const ROLE_NOTIFS = { student: NOTIFS, college: COLLEGE_NOTIFS, company: COMPANY_NOTIFS, admin: [{ t: '3 companies pending verification', d: 'Review queue needs attention' }, { t: '2 listings reported', d: 'BrightHire Consultants flagged by students' }] };
-const ROLE_NAMES = { student: ['Jahnavi', 'S', 'BMSIT · CSE'], college: ['TPO, BMSIT', 'T', 'BMS Institute of Technology'], company: ['NovaTech HR', 'N', 'NovaTech'], admin: ['Platform Admin', 'A', 'CampusBridge Platform'] };
+const ROLE_NAMES = { student: ['Jahnavi', 'S', 'BMSIT · CSE'], college: ['TPO, BMSIT', 'T', 'BMS Institute of Technology and Management'], company: ['NovaTech HR', 'N', 'NovaTech'], admin: ['Platform Admin', 'A', 'CampusBridge Platform'] };
 const AUTH_EMAIL_LABEL = { student: 'College email', college: 'Institutional email', company: 'Work email', admin: 'Admin email' };
