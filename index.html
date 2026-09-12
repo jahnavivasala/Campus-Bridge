@@ -41,7 +41,7 @@
       </div>
       <p class="hero-note">No resume keyword games. Every claim on CampusBridge is backed by evidence someone reviewed.</p>
     </div>
-    <div class="hero-card">
+    <div class="hero-card glass">
       <div class="hero-orbit">Verified 08 Sep 2026</div>
       <div class="hero-card-head">
         <div>
@@ -54,19 +54,29 @@
       <div class="evidence-row"><span class="muted">Evidence</span><b>Assessment + 2 projects</b></div>
       <div class="evidence-row"><span class="muted">Assessment score</span><b>82%</b></div>
       <hr class="rule" style="margin:14px 0">
-      <div style="display:flex;gap:22px">
+      <button class="match-toggle" id="matchToggle" aria-expanded="false" aria-controls="matchBreakdown">
         <div class="stat-inline"><b>86%</b><span class="quiet" style="font-size:12px">match to Software Intern, NovaTech</span></div>
+        <span class="match-hint" id="matchHint">tap for breakdown ▾</span>
+      </button>
+      <div class="match-breakdown" id="matchBreakdown">
+        <div class="match-breakdown-in">
+          <div class="skill-chip-row"><span class="chip-label">Python</span><div class="bar-track"><div class="bar-fill" style="width:88%"></div></div><span class="chip-val">88%</span></div>
+          <div class="skill-chip-row"><span class="chip-label">SQL</span><div class="bar-track"><div class="bar-fill" style="width:74%"></div></div><span class="chip-val">74%</span></div>
+          <div class="skill-chip-row gap"><span class="chip-label">Docker</span><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div><span class="chip-val">20%</span></div>
+          <div class="skill-chip-row gap"><span class="chip-label">REST APIs</span><div class="bar-track"><div class="bar-fill" style="width:35%"></div></div><span class="chip-val">35%</span></div>
+          <p class="muted" style="font-size:12px;margin:10px 0 0">Missing: Docker, REST APIs. One verified Docker project would lift this match to ~94%.</p>
+        </div>
       </div>
     </div>
   </div>
 
-  <section class="band" id="how-it-works">
-    <div class="container">
+  <section class="band" id="the-problem">
+    <div class="container reveal">
       <div class="section-head">
         <span class="eyebrow">THE PROBLEM</span>
         <h2>Resumes say a lot. They prove very little.</h2>
       </div>
-      <div class="problem-grid">
+      <div class="problem-grid reveal-stagger">
         <div class="problem-item"><b>Students</b>Don't know which opportunities are genuine, or which skills companies actually require right now.</div>
         <div class="problem-item"><b>Colleges</b>Lack accurate, verifiable data on how employable their students really are.</div>
         <div class="problem-item"><b>Companies</b>Struggle to identify capable candidates from resumes full of self-declared skills.</div>
@@ -75,13 +85,14 @@
     </div>
   </section>
 
-  <section class="band band-alt">
-    <div class="container">
+  <section class="band band-alt" id="how-it-works">
+    <div class="container reveal">
       <div class="section-head">
         <span class="eyebrow">HOW IT WORKS</span>
         <h2>One verified pipeline, from classroom to offer letter</h2>
+        <p class="muted" style="margin-top:8px;font-size:14px">Six steps. No step can be skipped or faked — each one hands the next verifiable proof, not a claim.</p>
       </div>
-      <div class="flow-strip">
+      <div class="flow-strip reveal-stagger">
         <div class="flow-step"><div class="flow-num"></div><b>Create profile</b><p class="muted" style="font-size:13px">Student declares skills and academic details.</p></div>
         <div class="flow-step"><div class="flow-num"></div><b>Submit evidence</b><p class="muted" style="font-size:13px">Projects, assessments and certifications back every skill.</p></div>
         <div class="flow-step"><div class="flow-num"></div><b>College verifies</b><p class="muted" style="font-size:13px">Faculty or TPO reviews and approves the evidence.</p></div>
@@ -93,12 +104,12 @@
   </section>
 
   <section class="band">
-    <div class="container">
+    <div class="container reveal">
       <div class="section-head">
         <span class="eyebrow">BUILT FOR THREE AUDIENCES</span>
         <h2>What changes for each side of the table</h2>
       </div>
-      <div class="roles-grid">
+      <div class="roles-grid bento">
         <div class="role-card" id="for-students">
           <h3>For students</h3>
           <ul>
@@ -114,7 +125,6 @@
             <li>Verify student evidence in one review queue</li>
             <li>See department-wise employability at a glance</li>
             <li>Spot skill gaps before placement season</li>
-            <li>Track outcomes with named industry partners</li>
           </ul>
         </div>
         <div class="role-card" id="for-companies">
@@ -123,15 +133,18 @@
             <li>Post structured roles with real eligibility criteria</li>
             <li>Filter candidates by verified competency, not keywords</li>
             <li>Review Skill Passports instead of static PDFs</li>
-            <li>Track a shortlist from interview to joining</li>
           </ul>
+        </div>
+        <div class="role-card-mini">
+          <div><b>Outcomes tracked end to end</b><br><span>Every hire is followed from shortlist to joining — for both the college and the company.</span></div>
+          <span class="pill pill-brass">SIH26044 prototype</span>
         </div>
       </div>
     </div>
   </section>
 
   <section class="band band-alt">
-    <div class="container">
+    <div class="container reveal">
       <div class="section-head">
         <span class="eyebrow">GENUINE OPPORTUNITY VERIFICATION</span>
         <h2>Every listing is checked before a student ever sees it</h2>
@@ -142,11 +155,70 @@
         <div class="trust-item"><b>Report a listing</b><span class="muted" style="font-size:13px">Fake postings, money requests or misleading stipends can be flagged.</span></div>
         <div class="trust-item"><b>Admin review</b><span class="muted" style="font-size:13px">Listings are approved before publishing, not after complaints.</span></div>
       </div>
+
+      <div class="section-head" style="margin-top:46px;margin-bottom:18px">
+        <span class="eyebrow">HOW VERIFICATION WORKS</span>
+        <h2 style="font-size:22px">Not every proof carries the same weight — and it shouldn't</h2>
+      </div>
+      <div class="tier-grid">
+        <div class="tier-card">
+          <span class="tier-badge tier-bronze">🥉 SELF-DECLARED</span>
+          <h4>Project link added</h4>
+          <p>Student attaches a repo, deployment or write-up. Visible to recruiters, but flagged as unverified.</p>
+        </div>
+        <div class="tier-card">
+          <span class="tier-badge tier-silver">🥈 FACULTY VERIFIED</span>
+          <h4>Internal review done</h4>
+          <p>A faculty member or TPO has reviewed the code or output and signed off on the claim.</p>
+        </div>
+        <div class="tier-card">
+          <span class="tier-badge tier-gold">🥇 INDUSTRY VERIFIED</span>
+          <h4>Third-party assessment</h4>
+          <p>Backed by an external assessment score, certification, or real internship proof.</p>
+        </div>
+      </div>
+      <div class="audit-strip">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="var(--brass-ink)" stroke-width="1.6"/></svg>
+        Every verification carries a visible audit trail — timestamp, reviewer ID and department — so recruiters can trust what they're reading.
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container reveal">
+      <div class="section-head">
+        <span class="eyebrow">WHAT IT LOOKS LIKE</span>
+        <h2>A quick look at the actual screens</h2>
+      </div>
+      <div class="mock-grid">
+        <div class="mock-card">
+          <span class="mock-label">Public Skill Passport</span>
+          <h4>Ananya R. · CSE, 3rd year</h4>
+          <p class="muted" style="font-size:12.5px;margin-bottom:10px">Shared link — read-only, no login required</p>
+          <div class="passport-skill-row"><span>Python</span><span class="pill pill-verified">🥇 Industry verified</span></div>
+          <div class="passport-skill-row"><span>Data Structures</span><span class="pill pill-amber">🥈 Faculty verified</span></div>
+          <div class="passport-skill-row"><span>React</span><span class="pill pill-slate">🥉 Self-declared</span></div>
+          <div class="passport-skill-row"><span>SQL</span><span class="pill pill-verified">🥇 Industry verified</span></div>
+        </div>
+        <div class="mock-card">
+          <span class="mock-label">TPO dashboard · department readiness</span>
+          <h4>CSE · 3rd year, 214 students</h4>
+          <div class="bar-row"><span style="width:110px">Web Dev ready</span><div class="bar-track"><div class="bar-fill" style="width:68%"></div></div><b>68%</b></div>
+          <div class="bar-row"><span style="width:110px">Data Science ready</span><div class="bar-track"><div class="bar-fill" style="width:41%"></div></div><b>41%</b></div>
+          <div class="bar-row"><span style="width:110px">Cloud/DevOps ready</span><div class="bar-track"><div class="bar-fill" style="width:29%"></div></div><b>29%</b></div>
+          <p class="muted" style="font-size:12px;margin-top:10px">Surfaced automatically from verified Skill Passports — no manual survey needed.</p>
+        </div>
+      </div>
+      <div class="proof-strip">
+        <span>Built for</span><b>Smart India Hackathon — SIH26044</b>
+        <span>·</span><span>Working prototype, not a production platform</span>
+        <span>·</span><span>Designed for TPOs, hiring teams and students</span>
+      </div>
     </div>
   </section>
 
   <section class="cta-band">
-    <div class="container">
+    <div class="container reveal">
       <h2>Your evidence should open doors, not sit in a PDF.</h2>
       <p>Join as a student, a college, or a hiring team — it takes about two minutes.</p>
       <div class="cta-roles">
@@ -160,7 +232,7 @@
 
   <footer class="site container">
     <span>© 2026 CampusBridge · SIH26044 prototype</span>
-    <span>Built as a working demonstration, not a production platform</span>
+    <span>Built as a working demonstration for Smart India Hackathon, not a production platform</span>
   </footer>
 </div>
 
@@ -180,6 +252,7 @@
         <button data-role="college">College / TPO</button>
         <button data-role="company">Company</button>
         <button data-role="admin">Admin</button>
+        <span class="tab-underline" id="tabUnderline"></span>
       </div>
       <h2 id="authTitle" style="font-size:22px">Sign in to your account</h2>
       <p class="muted" id="authSub" style="font-size:13.5px;margin-bottom:22px">Use any details — this is a working prototype.</p>
