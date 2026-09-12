@@ -32,6 +32,65 @@ function init() {
   setAuthRole('student');
   setAuthMode('login');
   showScreen('view-landing');
+  wireLandingV2Enhancements();
+}
+
+/* ============================================================= LANDING V2 ENHANCEMENTS =============================================================
+   Additive polish layer: scroll-reveal on landing sections, an
+   interactive match-score breakdown on the hero card, and a sliding
+   underline on the auth role tabs. None of this touches the screen
+   switching / dashboard logic above. */
+function wireLandingV2Enhancements() {
+  wireScrollReveal();
+  wireMatchBreakdown();
+  wireTabUnderline();
+}
+
+function wireScrollReveal() {
+  const targets = document.querySelectorAll('.reveal, .reveal-stagger');
+  if (!targets.length) return;
+  if (!('IntersectionObserver' in window)) {
+    targets.forEach(t => t.classList.add('in-view'));
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  targets.forEach(t => io.observe(t));
+}
+
+function wireMatchBreakdown() {
+  const toggle = document.getElementById('matchToggle');
+  const panel = document.getElementById('matchBreakdown');
+  const hint = document.getElementById('matchHint');
+  if (!toggle || !panel) return;
+  toggle.addEventListener('click', () => {
+    const open = panel.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+    if (hint) hint.textContent = open ? 'hide breakdown ▴' : 'tap for breakdown ▾';
+  });
+}
+
+function wireTabUnderline() {
+  const wrap = document.getElementById('authRoleTabs');
+  const underline = document.getElementById('tabUnderline');
+  if (!wrap || !underline) return;
+  const place = () => {
+    const active = wrap.querySelector('button.active');
+    if (!active) return;
+    underline.style.left = active.offsetLeft + 'px';
+    underline.style.width = active.offsetWidth + 'px';
+  };
+  wrap.querySelectorAll('button[data-role]').forEach(btn => {
+    btn.addEventListener('click', () => setTimeout(place, 0));
+  });
+  window.addEventListener('resize', place);
+  setTimeout(place, 0);
 }
 
 /* ============================================================= BRAND MARK ============================================================= */
