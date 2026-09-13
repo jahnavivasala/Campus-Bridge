@@ -15,29 +15,33 @@
    ===================================================================== */
 
 /* ===================== FONTS ===================== */
-/* Swapped in a warmer, more expressive pairing: Fraunces (a serif with
-   real personality for headings) + Plus Jakarta Sans (a friendlier,
-   slightly rounder workhorse for body copy) instead of the flatter
-   Source Serif / IBM Plex combo. IBM Plex Mono kept for code/labels. */
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap');
+/* One typeface family for everything except headings: Plus Jakarta Sans
+   covers body copy, buttons, tabs, nav, and all the small mono-style
+   labels (eyebrows, badges, sidebar tags) that previously pulled in a
+   THIRD font (IBM Plex Mono) — that mismatch was the "fonts don't match"
+   issue. Fraunces is kept only for headings/display numerals, giving a
+   clean two-font system instead of three fighting for attention.
+   --mono is now just an alias so every existing font-family:var(--mono)
+   rule in this file renders in the same sans, with zero rules to hunt down. */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 /* ===================== DESIGN TOKENS ===================== */
 :root{
-  --ink:#14171F;
-  --ink-soft:#2B2F3A;
-  --slate:#5B5F6B;
-  --slate-quiet:#8A8D97;
-  --paper:#ECE6D8;
-  --paper-deep:#DFD6BE;
+  --ink:#161A17;
+  --ink-soft:#2C332E;
+  --slate:#5A625C;
+  --slate-quiet:#8A928B;
+  --paper:#F5F1E4;
+  --paper-deep:#EAE1C8;
   --panel:#FFFFFF;
-  --line:#D2C8AC;
-  --line-soft:#E2D9C2;
+  --line:#DCD3B6;
+  --line-soft:#EAE2CC;
   --brass:#9C7A2E;
   --brass-ink:#6E551E;
   --brass-wash:#F1E7CE;
   --teal:#1F5C52;
   --teal-deep:#173F39;
-  --teal-wash:#E4EFEC;
+  --teal-wash:#E0EEE9;
   --burgundy:#7A2E2E;
   --burgundy-wash:#F3E4E1;
   --amber-wash:#FBF0DC;
@@ -46,14 +50,14 @@
   --radius-m:8px;
   --serif:"Fraunces","Source Serif 4",Georgia,serif;
   --sans:"Plus Jakarta Sans","IBM Plex Sans",Arial,sans-serif;
-  --mono:"IBM Plex Mono",monospace;
+  --mono:var(--sans);
   --shadow-card:0 1px 2px rgba(20,23,31,.06), 0 8px 24px -12px rgba(20,23,31,.22);
   --shadow-card-hover:0 2px 4px rgba(20,23,31,.07), 0 14px 32px -14px rgba(20,23,31,.28);
   --content-max:1320px;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:linear-gradient(180deg,#F3EFE4 0%,var(--paper) 340px,var(--paper) 100%);color:var(--ink);font:15.5px/1.65 var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+body{margin:0;background:linear-gradient(180deg,#FAF7EC 0%,var(--paper) 320px,var(--paper) 100%);color:var(--ink);font:15.5px/1.65 var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
 h1,h2,h3,h4{font-family:var(--serif);color:var(--ink);margin:0 0 .3em;font-weight:600;letter-spacing:-0.015em;font-feature-settings:"ss01" 1}
 p{margin:0 0 1em;color:var(--ink-soft)}
 a{color:var(--teal)}
@@ -172,9 +176,9 @@ footer.site{padding-top:36px;padding-bottom:36px;font-size:12.5px;color:var(--sl
 .auth-form-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:40px}
 .auth-box{width:100%;max-width:380px}
 .role-tabs{display:flex;border:1px solid var(--line);border-radius:var(--radius-s);overflow:hidden;margin-bottom:26px}
-.role-tabs button{flex:1;background:#fff;border:0;padding:10px 6px;font-size:12.5px;font-weight:600;color:var(--slate);border-right:1px solid var(--line)}
+.role-tabs button{flex:1;background:#fff;border:0;padding:10px 6px;font-size:12.5px;font-family:var(--sans);font-weight:600;color:var(--slate);border-right:1px solid var(--line)}
 .role-tabs button:last-child{border-right:0}
-.role-tabs button.active{background:var(--ink);color:#fff}
+.role-tabs button.active{background:var(--teal-deep);color:#fff}
 .auth-toggle{text-align:center;margin-top:16px;font-size:13px}
 .auth-toggle button{background:none;border:0;color:var(--teal);font-weight:600;padding:0}
 .back-home{font-size:13px;color:#c9cbd4;background:none;border:0;padding:0;display:flex;align-items:center;gap:6px}
@@ -186,7 +190,7 @@ footer.site{padding-top:36px;padding-bottom:36px;font-size:12.5px;color:var(--sl
 .sidebar .brand{color:#fff;padding:6px 10px 24px}
 .sidebar-role{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--brass);padding:0 10px 14px;text-transform:uppercase}
 .side-nav{flex:1;display:flex;flex-direction:column;gap:2px;overflow-y:auto}
-.side-nav button{display:flex;align-items:center;gap:11px;background:transparent;border:0;color:#aeb1bd;text-align:left;padding:10px 12px;border-radius:6px;font-size:13.5px;width:100%;transition:background .12s ease,color .12s ease}
+.side-nav button{display:flex;align-items:center;gap:11px;background:transparent;border:0;color:#aeb1bd;text-align:left;padding:10px 12px;border-radius:6px;font-size:13.5px;font-family:var(--sans);width:100%;transition:background .12s ease,color .12s ease}
 .side-nav button svg{flex:none;opacity:.85}
 .side-nav button:hover{background:#1F232E;color:#fff}
 .side-nav button.active{background:var(--teal-deep);color:#fff}
@@ -281,9 +285,9 @@ td{padding:13px 8px;border-bottom:1px solid var(--line-soft)}
 .privacy-opt{display:flex;align-items:flex-start;gap:10px;padding:12px 0;border-top:1px solid var(--line-soft)}
 .privacy-opt:first-child{border-top:0}
 .privacy-opt input{width:auto}
-.tabbar{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:20px}
-.tabbar button{background:none;border:0;padding:10px 4px;margin-right:22px;font-size:13.5px;font-weight:600;color:var(--slate);border-bottom:2px solid transparent}
-.tabbar button.active{color:var(--ink);border-color:var(--brass)}
+.tabbar{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:20px;font-family:var(--sans)}
+.tabbar button{background:none;border:0;padding:10px 4px;margin-right:22px;font-size:13.5px;font-weight:600;font-family:inherit;color:var(--slate);border-bottom:2px solid transparent}
+.tabbar button.active{color:var(--teal-deep);border-color:var(--teal)}
 .report-flag{font-size:12px;color:var(--burgundy);background:none;border:0;padding:0;font-weight:600}
 @media(max-width:1000px){.two-col{grid-template-columns:1fr}.stat-row{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:760px){.sidebar{position:fixed;left:0;bottom:0;top:auto;width:100%;height:60px;flex-direction:row;padding:0 6px;z-index:30}
