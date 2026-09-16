@@ -270,12 +270,47 @@ function buildPages(role) {
   renderOppLists();
 }
 
+
+function skillMapRows() {
+  return SKILL_MAP.map(s => `<tr>
+    <td><b>${s.skill}</b><div class="muted" style="font-size:11px">${s.path}</div></td>
+    <td>${s.branches}</td><td><b>${s.students}</b></td>
+    <td><span class="pill ${s.demand === 'High' ? 'pill-verified' : 'pill-amber'}">${s.demand}</span></td>
+  </tr>`).join('');
+}
+
+function campusProjectCard(p) {
+  return `<div class="project-op-card">
+    <div class="project-op-top"><span class="pill pill-brass">${p.stage}</span><span class="muted">${p.members}/${p.members + p.seats} members</span></div>
+    <h3>${p.title}</h3>
+    <p class="muted">${p.owner}</p>
+    <div class="skill-chips">${p.skills.map(s => `<span class="chip">${s}</span>`).join('')}</div>
+    <div class="project-op-meta"><b>Looking for:</b> ${p.need}</div>
+    <button class="btn btn-primary btn-sm" data-action="Project team request sent for ${p.title}">Request to join</button>
+  </div>`;
+}
+
+function workshopCard(w) {
+  return `<div class="hub-card"><div class="hub-card-top"><span class="pill pill-teal">${w.tag}</span><span class="muted">${w.date}</span></div>
+    <h3>${w.title}</h3><p class="muted">${w.audience} · ${w.mode}</p><div class="hub-card-foot"><span>${w.seats}</span><button class="btn btn-outline btn-sm" data-action="Registration started for ${w.title}">Register</button></div></div>`;
+}
+
+function clubCard(c) {
+  return `<div class="club-card"><span class="club-icon">${c.type === 'Technical' ? '⌘' : c.type === 'Creative' ? '✦' : '◎'}</span><div><b>${c.name}</b><div class="muted">${c.type}</div><p>${c.focus}</p></div></div>`;
+}
+
 function studentPages() {
   return `
 <section class="page" id="page-dashboard">
   <div class="page-head">
-    <div><span class="eyebrow">STUDENT WORKSPACE</span><h1>Good to see you, Jahnavi.</h1><p class="muted">Your verified skills are opening new opportunities.</p></div>
+    <div><span class="eyebrow">STUDENT WORKSPACE</span><h1>Good to see you, Ananya.</h1><p class="muted">Your verified skills can open opportunities, projects and campus connections.</p></div>
     <div class="card" style="width:260px;padding:14px 16px"><b style="font-size:13px">Profile completion <span style="float:right;color:var(--teal)">72%</span></b><div class="progress-track"><div class="progress-fill" style="width:72%"></div></div><small class="muted">Add your GitHub profile to improve matches.</small></div>
+  </div>
+  <div class="quick-feature-row">
+    <button class="quick-feature" onclick="goPage('team-builder')"><span>⌘</span><b>Build a team</b><small>Find missing skills across branches</small></button>
+    <button class="quick-feature" onclick="goPage('skill-map')"><span>◌</span><b>Explore campus skills</b><small>See where expertise exists</small></button>
+    <button class="quick-feature" onclick="goPage('growth')"><span>↗</span><b>View growth journey</b><small>Track progress from year 1 onward</small></button>
+    <button class="quick-feature" onclick="goPage('campus-hub')"><span>✦</span><b>Campus Hub</b><small>Clubs, workshops and learning</small></button>
   </div>
   <div class="stat-row">
     <div class="stat-block"><small>Declared skills</small><span class="n">12</span><small class="muted">8 evidence-backed · 5 college-verified</small></div>
@@ -316,6 +351,68 @@ function studentPages() {
       </div>
     </div>
   </div>
+</section>
+
+<section class="page" id="page-explore-students">
+  <div class="page-head">
+    <div><span class="eyebrow">CAMPUS COLLABORATION</span><h1>Explore Students</h1>
+    <p class="muted">Find teammates by skills, branch, interests and projects — not just by who you already know.</p></div>
+    <span class="pill pill-brass">Cross-branch discovery</span>
+  </div>
+  <div class="card collaboration-banner">
+    <div><b>Build interdisciplinary teams</b><p class="muted">Example: find a Civil Engineering student with GIS or sustainable-design skills for a smart-city project, or an ECE student for an IoT prototype.</p></div>
+    <div class="mini-stat"><b>9</b><span>engineering branches</span></div>
+    <div class="mini-stat"><b>18</b><span>demo student profiles</span></div>
+  </div>
+  <div class="filters-row student-filters">
+    <input id="studentSkillSearch" placeholder="Search a skill, project, interest or student">
+    <select id="studentBranchFilter"><option>All branches</option>${ENGINEERING_BRANCHES.map(b => `<option>${b}</option>`).join('')}</select>
+    <select id="studentYearFilter"><option>All years</option><option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option>4th Year</option></select>
+    <input id="studentInterestFilter" placeholder="Filter by interest e.g. IoT">
+  </div>
+  <div class="directory-head"><span id="studentResultCount" class="muted">18 students found</span><span class="muted">All names/data are fictional prototype records</span></div>
+  <div id="studentDirectory" class="student-directory"></div>
+  <div id="studentPassportDetail" class="card student-passport-detail"></div>
+</section>
+
+
+
+<section class="page" id="page-team-builder">
+  <div class="page-head"><div><span class="eyebrow">INTERDISCIPLINARY COLLABORATION</span><h1>Team Builder</h1><p class="muted">Turn an idea into a balanced student team by finding the skills you are missing.</p></div><span class="pill pill-verified">Built for student-led projects</span></div>
+  <div class="card team-builder-hero">
+    <div><span class="eyebrow">EXAMPLE BRIEF</span><h2>Smart campus water management</h2><p class="muted">CampusBridge identifies complementary skills instead of asking you to search hundreds of profiles manually.</p></div>
+    <div class="team-need-grid"><div><b>Needed</b><span>Civil / GIS</span></div><div><b>Needed</b><span>ECE / IoT</span></div><div><b>Needed</b><span>CSE / Data</span></div></div>
+  </div>
+  <div class="section-label">Open student-led projects</div>
+  <div class="project-op-grid">${CAMPUS_PROJECTS.map(campusProjectCard).join('')}</div>
+  <div class="card team-explainer"><b>Why this is different</b><p class="muted">A placement portal begins with hiring. Team Builder begins with the student's idea, then connects the right people, evidence and project experience around it.</p></div>
+</section>
+
+<section class="page" id="page-skill-map">
+  <div class="page-head"><div><span class="eyebrow">CAMPUS-WIDE DISCOVERY</span><h1>Campus Skill Map</h1><p class="muted">A prototype view of the skills available across BMS Institute of Technology and Management.</p></div><span class="pill pill-brass">Demo analytics</span></div>
+  <div class="stat-row">
+    <div class="stat-block"><small>Skills mapped</small><span class="n">120+</span><small class="muted">Across engineering branches</small></div>
+    <div class="stat-block"><small>Branches connected</small><span class="n">9</span><small class="muted">Cross-disciplinary discovery</small></div>
+    <div class="stat-block"><small>Project demand</small><span class="n">31</span><small class="muted">Open team requirements</small></div>
+    <div class="stat-block"><small>Evidence-backed</small><span class="n">68%</span><small class="muted">Prototype campus metric</small></div>
+  </div>
+  <div class="card"><div class="card-head"><h2>Where skills live across campus</h2><span class="muted">Fictional prototype counts</span></div><div class="table-wrap"><table><thead><tr><th>Skill</th><th>Branches</th><th>Students</th><th>Demand</th></tr></thead><tbody>${skillMapRows()}</tbody></table></div></div>
+  <div class="card" style="margin-top:16px"><div class="card-head"><h2>Use it for more than placements</h2></div><div class="feature-grid-mini"><div><b>Find teammates</b><span>Locate a missing skill for a project or hackathon.</span></div><div><b>Find mentors</b><span>Identify students with stronger verified competency.</span></div><div><b>Find learning groups</b><span>Discover peers learning the same domain.</span></div><div><b>Spot emerging skills</b><span>Help departments understand what students are building.</span></div></div></div>
+</section>
+
+<section class="page" id="page-growth">
+  <div class="page-head"><div><span class="eyebrow">FROM DAY ONE TO GRADUATION</span><h1>Growth Journey</h1><p class="muted">A continuous student-development record that sits alongside academics and the official placement process.</p></div></div>
+  <div class="growth-line">${GROWTH_MILESTONES.map((m,i) => `<div class="growth-step ${i===0?'current':''}"><div class="growth-dot">${i+1}</div><div><span class="eyebrow">${m.term} · ${m.state}</span><h2>${m.title}</h2><p class="muted">${m.body}</p></div></div>`).join('')}</div>
+  <div class="card readiness-card"><div><span class="eyebrow">READINESS SNAPSHOT</span><h2>Build evidence before you need it.</h2><p class="muted">The prototype treats projects, assessments, certifications, teamwork and verified skills as a growing record rather than something students assemble at the end of fourth year.</p></div><div class="readiness-ring"><b>72%</b><span>profile evidence</span></div></div>
+</section>
+
+<section class="page" id="page-campus-hub">
+  <div class="page-head"><div><span class="eyebrow">CAMPUS LIFE + LEARNING</span><h1>Campus Hub</h1><p class="muted">Connect workshops, clubs and student activities to the skills students are trying to build.</p></div><span class="pill pill-verified">BMSIT&M prototype layer</span></div>
+  <div class="section-label">Upcoming learning &amp; collaboration</div>
+  <div class="hub-grid">${CAMPUS_WORKSHOPS.map(workshopCard).join('')}</div>
+  <div class="section-label" style="margin-top:24px">Clubs &amp; communities</div>
+  <div class="club-grid">${CAMPUS_CLUBS.map(clubCard).join('')}</div>
+  <div class="audit-strip"><b>Prototype note:</b> club and workshop records are sample data. A future version could connect to official college activity feeds with permission.</div>
 </section>
 
 <section class="page" id="page-opportunities">
@@ -392,9 +489,9 @@ function studentPages() {
   <div class="page-head"><div><span class="eyebrow">YOUR RECORD</span><h1>Profile &amp; Privacy</h1><p class="muted">A combination of resume, portfolio and verified competency record.</p></div></div>
   <div class="two-col">
     <div class="card"><div class="card-head"><h2>Profile summary</h2></div>
-      <div class="bar-row"><span class="muted">Name</span><b>Jahnavi</b></div>
+      <div class="bar-row"><span class="muted">Name</span><b>Ananya Rao</b></div>
       <div class="bar-row"><span class="muted">College</span><b>BMS Institute of Technology and Management</b></div>
-      <div class="bar-row"><span class="muted">Branch</span><b>Computer Science &amp; Engineering</b></div>
+      <div class="bar-row"><span class="muted">Branch</span><b>Computer Science and Engineering</b></div>
       <div class="bar-row"><span class="muted">Current year</span><b>1st year</b></div>
       <div class="bar-row"><span class="muted">Graduation year</span><b>2030</b></div>
       <div class="bar-row"><span class="muted">Preferred work mode</span><b>Hybrid</b></div>
@@ -411,10 +508,73 @@ function studentPages() {
 </section>`;
 }
 
+
+function studentDirectoryCard(s) {
+  const skillNames = s.skills.map(x => x[0]).join(', ');
+  return `<div class="student-discovery-card">
+    <div class="student-card-top">
+      <div class="avatar student-avatar">${s.initials}</div>
+      <div class="student-card-name"><b>${s.name}</b><span>${s.branch}</span><small>${s.year} · ${s.availability}</small></div>
+    </div>
+    <div class="skill-chips">${s.skills.slice(0,3).map(x => `<span class="chip chip-yes">${x[0]} · ${x[1]}</span>`).join('')}</div>
+    <div class="student-card-meta"><span><b>Interests:</b> ${s.interests.slice(0,2).join(' · ')}</span><span><b>Project:</b> ${s.projects[0]}</span></div>
+    <button class="btn btn-outline btn-sm" onclick="openStudentPassport(${s.id})">View Skill Passport</button>
+  </div>`;
+}
+
+function renderStudentDirectory() {
+  const host = document.getElementById('studentDirectory');
+  if (!host) return;
+  const q = (document.getElementById('studentSkillSearch')?.value || '').toLowerCase().trim();
+  const branch = document.getElementById('studentBranchFilter')?.value || 'All branches';
+  const year = document.getElementById('studentYearFilter')?.value || 'All years';
+  const interest = (document.getElementById('studentInterestFilter')?.value || '').toLowerCase().trim();
+
+  const filtered = STUDENTS.filter(s => {
+    const hay = [s.name,s.branch,s.year,s.projects.join(' '),s.interests.join(' '),s.skills.map(x=>x.join(' ')).join(' ')].join(' ').toLowerCase();
+    return (!q || hay.includes(q)) &&
+      (branch === 'All branches' || s.branch === branch) &&
+      (year === 'All years' || s.year === year) &&
+      (!interest || s.interests.join(' ').toLowerCase().includes(interest));
+  });
+
+  host.innerHTML = filtered.length
+    ? filtered.map(studentDirectoryCard).join('')
+    : '<div class="empty-state">No students match those filters. Try another branch or skill.</div>';
+
+  const count = document.getElementById('studentResultCount');
+  if (count) count.textContent = `${filtered.length} student${filtered.length === 1 ? '' : 's'} found`;
+}
+
+function openStudentPassport(id) {
+  const s = STUDENTS.find(x => x.id === id);
+  const panel = document.getElementById('studentPassportDetail');
+  if (!s || !panel) return;
+  panel.innerHTML = `
+    <div class="passport-detail-head">
+      <div class="avatar student-avatar">${s.initials}</div>
+      <div><span class="eyebrow">STUDENT SKILL PASSPORT</span><h2>${s.name}</h2><p class="muted">${s.branch} · ${s.year}</p></div>
+    </div>
+    <div class="passport-status"><span class="pill pill-verified">CampusBridge profile</span><span class="pill pill-brass">${s.availability}</span></div>
+    <h3>Verified & evidence-backed skills</h3>
+    ${s.skills.map(x => `<div class="passport-skill-row"><span><b>${x[0]}</b><small class="muted"> · ${x[1]}</small></span><span class="pill ${x[2].includes('Industry') || x[2].includes('Faculty') ? 'pill-verified' : 'pill-slate'}">${x[2]}</span></div>`).join('')}
+    <h3 style="margin-top:18px">Projects</h3>
+    <div class="skill-chips">${s.projects.map(p => `<span class="chip">${p}</span>`).join('')}</div>
+    <h3 style="margin-top:18px">Interests</h3>
+    <div class="skill-chips">${s.interests.map(i => `<span class="chip">${i}</span>`).join('')}</div>
+    <h3 style="margin-top:18px">Evidence</h3>
+    <p class="muted">${s.certs.join(' · ')} · Project evidence available for review</p>
+    <button class="btn btn-primary" data-action="Collaboration request sent to ${s.name}">Invite to project team</button>
+  `;
+  panel.classList.add('show');
+  panel.scrollIntoView({behavior:'smooth', block:'start'});
+  bindActionButtons(panel);
+}
+
 function collegePages() {
   return `
 <section class="page" id="page-dashboard">
-  <div class="page-head"><div><span class="eyebrow">ACADEMIA VIEW</span><h1>BMS Institute of Technology</h1><p class="muted">Monitor readiness, verify evidence, and connect students with industry.</p></div></div>
+  <div class="page-head"><div><span class="eyebrow">ACADEMIA VIEW</span><h1>BMS Institute of Technology and Management</h1><p class="muted">Monitor readiness, verify evidence, and connect students with industry.</p></div></div>
   <div class="stat-row">
     <div class="stat-block"><small>Registered students</small><span class="n">2,450</span></div>
     <div class="stat-block"><small>Verified profiles</small><span class="n">1,860</span></div>
@@ -457,6 +617,45 @@ function collegePages() {
     <div class="card"><div class="card-head"><h2>Data Structures &amp; Cloud Fundamentals</h2><span class="pill pill-verified">Open</span></div><p class="muted">4 weeks · Targets the department's lowest-verified skills.</p><div class="bar-row"><span class="muted">Registered</span><b>212 students</b></div><button class="btn btn-outline btn-sm" style="margin-top:10px" data-action="Workshop roster opened">View roster</button></div>
     <div class="card"><div class="card-head"><h2>Industry Résumé &amp; Interview Prep</h2><span class="pill pill-amber">Planning</span></div><p class="muted">2 weeks · Requested by final-year students after placement season.</p><button class="btn btn-outline btn-sm" data-action="Workshop planning opened">Continue planning</button></div>
   </div>
+</section>
+
+
+<section class="page" id="page-team-builder">
+  <div class="page-head"><div><span class="eyebrow">INTERDISCIPLINARY COLLABORATION</span><h1>Team Builder</h1><p class="muted">Turn an idea into a balanced student team by finding the skills you are missing.</p></div><span class="pill pill-verified">Built for student-led projects</span></div>
+  <div class="card team-builder-hero">
+    <div><span class="eyebrow">EXAMPLE BRIEF</span><h2>Smart campus water management</h2><p class="muted">CampusBridge identifies complementary skills instead of asking you to search hundreds of profiles manually.</p></div>
+    <div class="team-need-grid"><div><b>Needed</b><span>Civil / GIS</span></div><div><b>Needed</b><span>ECE / IoT</span></div><div><b>Needed</b><span>CSE / Data</span></div></div>
+  </div>
+  <div class="section-label">Open student-led projects</div>
+  <div class="project-op-grid">${CAMPUS_PROJECTS.map(campusProjectCard).join('')}</div>
+  <div class="card team-explainer"><b>Why this is different</b><p class="muted">A placement portal begins with hiring. Team Builder begins with the student's idea, then connects the right people, evidence and project experience around it.</p></div>
+</section>
+
+<section class="page" id="page-skill-map">
+  <div class="page-head"><div><span class="eyebrow">CAMPUS-WIDE DISCOVERY</span><h1>Campus Skill Map</h1><p class="muted">A prototype view of the skills available across BMS Institute of Technology and Management.</p></div><span class="pill pill-brass">Demo analytics</span></div>
+  <div class="stat-row">
+    <div class="stat-block"><small>Skills mapped</small><span class="n">120+</span><small class="muted">Across engineering branches</small></div>
+    <div class="stat-block"><small>Branches connected</small><span class="n">9</span><small class="muted">Cross-disciplinary discovery</small></div>
+    <div class="stat-block"><small>Project demand</small><span class="n">31</span><small class="muted">Open team requirements</small></div>
+    <div class="stat-block"><small>Evidence-backed</small><span class="n">68%</span><small class="muted">Prototype campus metric</small></div>
+  </div>
+  <div class="card"><div class="card-head"><h2>Where skills live across campus</h2><span class="muted">Fictional prototype counts</span></div><div class="table-wrap"><table><thead><tr><th>Skill</th><th>Branches</th><th>Students</th><th>Demand</th></tr></thead><tbody>${skillMapRows()}</tbody></table></div></div>
+  <div class="card" style="margin-top:16px"><div class="card-head"><h2>Use it for more than placements</h2></div><div class="feature-grid-mini"><div><b>Find teammates</b><span>Locate a missing skill for a project or hackathon.</span></div><div><b>Find mentors</b><span>Identify students with stronger verified competency.</span></div><div><b>Find learning groups</b><span>Discover peers learning the same domain.</span></div><div><b>Spot emerging skills</b><span>Help departments understand what students are building.</span></div></div></div>
+</section>
+
+<section class="page" id="page-growth">
+  <div class="page-head"><div><span class="eyebrow">FROM DAY ONE TO GRADUATION</span><h1>Growth Journey</h1><p class="muted">A continuous student-development record that sits alongside academics and the official placement process.</p></div></div>
+  <div class="growth-line">${GROWTH_MILESTONES.map((m,i) => `<div class="growth-step ${i===0?'current':''}"><div class="growth-dot">${i+1}</div><div><span class="eyebrow">${m.term} · ${m.state}</span><h2>${m.title}</h2><p class="muted">${m.body}</p></div></div>`).join('')}</div>
+  <div class="card readiness-card"><div><span class="eyebrow">READINESS SNAPSHOT</span><h2>Build evidence before you need it.</h2><p class="muted">The prototype treats projects, assessments, certifications, teamwork and verified skills as a growing record rather than something students assemble at the end of fourth year.</p></div><div class="readiness-ring"><b>72%</b><span>profile evidence</span></div></div>
+</section>
+
+<section class="page" id="page-campus-hub">
+  <div class="page-head"><div><span class="eyebrow">CAMPUS LIFE + LEARNING</span><h1>Campus Hub</h1><p class="muted">Connect workshops, clubs and student activities to the skills students are trying to build.</p></div><span class="pill pill-verified">BMSIT&M prototype layer</span></div>
+  <div class="section-label">Upcoming learning &amp; collaboration</div>
+  <div class="hub-grid">${CAMPUS_WORKSHOPS.map(workshopCard).join('')}</div>
+  <div class="section-label" style="margin-top:24px">Clubs &amp; communities</div>
+  <div class="club-grid">${CAMPUS_CLUBS.map(clubCard).join('')}</div>
+  <div class="audit-strip"><b>Prototype note:</b> club and workshop records are sample data. A future version could connect to official college activity feeds with permission.</div>
 </section>
 
 <section class="page" id="page-opportunities">
@@ -538,8 +737,8 @@ function adminPages() {
 <section class="page" id="page-users">
   <div class="page-head"><div><span class="eyebrow">USER MANAGEMENT</span><h1>Users</h1><p class="muted">Students, colleges and company accounts across the platform.</p></div></div>
   <div class="card"><div class="table-wrap"><table><thead><tr><th>Name</th><th>Role</th><th>College / Org</th><th>Status</th></tr></thead><tbody>
-    <tr><td>Jahnavi R</td><td>Student</td><td>BMS Institute of Technology</td><td><span class="pill pill-verified">Active</span></td></tr>
-    <tr><td>Dept. of CSE, BMSIT</td><td>College / TPO</td><td>BMS Institute of Technology</td><td><span class="pill pill-verified">Active</span></td></tr>
+    <tr><td>Ananya R</td><td>Student</td><td>BMS Institute of Technology and Management</td><td><span class="pill pill-verified">Active</span></td></tr>
+    <tr><td>Dept. of CSE, BMS Institute of Technology and Management</td><td>College / TPO</td><td>BMS Institute of Technology and Management</td><td><span class="pill pill-verified">Active</span></td></tr>
     <tr><td>NovaTech HR</td><td>Company</td><td>NovaTech</td><td><span class="pill pill-verified">Active</span></td></tr>
     <tr><td>BrightHire Consultants</td><td>Company</td><td>BrightHire</td><td><span class="pill pill-burgundy">Reported</span></td></tr>
   </tbody></table></div></div>
@@ -581,6 +780,13 @@ function renderOppLists() {
   bindActionButtons(document.getElementById('content'));
 }
 function wireSearch() {
+  const studentSearchIds = ['studentSkillSearch','studentBranchFilter','studentYearFilter','studentInterestFilter'];
+  studentSearchIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener(el.tagName === 'INPUT' ? 'input' : 'change', renderStudentDirectory);
+  });
+  renderStudentDirectory();
+
   const s = document.getElementById('oppSearch');
   if (s) s.addEventListener('input', e => {
     const q = e.target.value.toLowerCase();
