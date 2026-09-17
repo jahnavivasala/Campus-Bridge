@@ -308,15 +308,19 @@ td{padding:13px 8px;border-bottom:1px solid var(--line-soft)}
 .tabbar button{background:none;border:0;padding:10px 4px;margin-right:22px;font-size:13.5px;font-weight:600;color:var(--slate);border-bottom:2px solid transparent}
 .tabbar button.active{color:var(--ink);border-color:var(--brass)}
 .report-flag{font-size:12px;color:var(--burgundy);background:none;border:0;padding:0;font-weight:600}
+.mobile-switch-portal{display:none}
 @media(max-width:1000px){.two-col{grid-template-columns:1fr}.stat-row{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:760px){.sidebar{position:fixed;left:0;bottom:0;top:auto;width:100%;height:60px;flex-direction:row;padding:0 6px;z-index:30}
   .sidebar .brand,.sidebar-role,.sidebar-foot{display:none}
-  .side-nav{flex-direction:row;overflow-x:auto;flex:1}
-  .side-nav button{flex-direction:column;font-size:9.5px;gap:3px;padding:8px 10px;white-space:nowrap}
+  .side-nav{flex-direction:row;overflow-x:auto;flex:1;-webkit-overflow-scrolling:touch}
+  .side-nav button{flex-direction:column;font-size:9.5px;gap:3px;padding:8px 10px;white-space:nowrap;flex:none}
   .main{padding-bottom:60px}
-  .topbar-search{width:160px}
+  .topbar{padding:0 14px}
+  .topbar-search{width:auto;flex:1;max-width:160px}
   .content{padding:20px 16px}
   .stat-row{grid-template-columns:1fr 1fr}
+  .mobile-switch-portal{display:flex}
+  .userbox .who{display:none}
 }
 
 /* =====================================================================
