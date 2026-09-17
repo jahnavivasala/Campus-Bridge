@@ -611,6 +611,34 @@ function collegePages() {
   </tbody></table></div></div>
 </section>
 
+<section class="page" id="page-campus-pulse">
+  <div class="page-head"><div><span class="eyebrow">DEVELOPMENT SIGNALS</span><h1>Campus Pulse</h1><p class="muted">A live-feeling snapshot of student growth activity across BMS Institute of Technology and Management.</p></div><span class="pill pill-brass">Demo analytics</span></div>
+  <div class="stat-row">
+    <div class="stat-block"><small>Student-led projects</small><span class="n">${CAMPUS_PROJECTS.length}</span><small class="muted">Seeking teammates across branches</small></div>
+    <div class="stat-block"><small>Upcoming workshops</small><span class="n">${CAMPUS_WORKSHOPS.length}</span><small class="muted">Listed in Campus Hub</small></div>
+    <div class="stat-block"><small>Active clubs &amp; communities</small><span class="n">${CAMPUS_CLUBS.length}</span><small class="muted">Technical, creative &amp; social</small></div>
+    <div class="stat-block"><small>Skills mapped</small><span class="n">120+</span><small class="muted">Across engineering branches</small></div>
+  </div>
+  <div class="quick-feature-row">
+    <button class="quick-feature" onclick="goPage('team-builder')"><span>⌘</span><b>Team Builder</b><small>Interdisciplinary project pipeline</small></button>
+    <button class="quick-feature" onclick="goPage('skill-map')"><span>◌</span><b>Campus Skill Map</b><small>Where expertise exists by branch</small></button>
+    <button class="quick-feature" onclick="goPage('growth')"><span>↗</span><b>Growth Journey</b><small>Year 1 to graduation pathway</small></button>
+    <button class="quick-feature" onclick="goPage('campus-hub')"><span>✦</span><b>Campus Hub</b><small>Workshops, clubs and learning</small></button>
+  </div>
+  <div class="two-col">
+    <div class="card"><div class="card-head"><h2>Student-led project pipeline</h2><button class="linkbtn" onclick="goPage('team-builder')">Open Team Builder</button></div>
+      ${CAMPUS_PROJECTS.slice(0, 3).map(p => `<div class="bar-row"><span><b>${p.title}</b><br><small class="muted">${p.need} · ${p.members}/${p.members + p.seats} members</small></span><span class="pill pill-brass">${p.stage}</span></div>`).join('')}
+    </div>
+    <div class="card"><div class="card-head"><h2>This month in Campus Hub</h2><button class="linkbtn" onclick="goPage('campus-hub')">Open Campus Hub</button></div>
+      ${CAMPUS_WORKSHOPS.slice(0, 3).map(w => `<div class="bar-row"><span><b>${w.title}</b><br><small class="muted">${w.audience} · ${w.mode}</small></span><span class="muted">${w.date}</span></div>`).join('')}
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px"><div class="card-head"><h2>Where students are in their growth journey</h2><button class="linkbtn" onclick="goPage('growth')">Full growth journey</button></div>
+    <div class="stat-row" style="margin-bottom:0">${GROWTH_MILESTONES.map(m => `<div class="stat-block"><small>${m.term} · ${m.state}</small><span class="n" style="font-size:18px">${m.title}</span></div>`).join('')}</div>
+  </div>
+  <div class="audit-strip" style="margin-top:16px"><b>Partnership boundary:</b> Campus Pulse tracks student development activity — projects, workshops and clubs — as an additive layer. It supports the existing placement/TPO process and does not replace official placement records or decisions.</div>
+</section>
+
 <section class="page" id="page-workshops">
   <div class="page-head"><div><span class="eyebrow">CLOSE THE GAP INSTITUTIONALLY</span><h1>Workshops &amp; Training</h1><p class="muted">Programs the college is running to close verified skill gaps.</p></div><button class="btn btn-primary btn-sm" data-action="New workshop form opened">+ Publish workshop</button></div>
   <div class="two-col">
